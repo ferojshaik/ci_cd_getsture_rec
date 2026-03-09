@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#2DD4BF</color>
+    <color name="background">#F8FAFC</color>
+    <color name="card_surface">#FFFFFF</color>
+    <color name="chip_background">#F1F5F9</color>
+    <color name="chip_selected_idle">#F1F5F9</color>
+    <color name="chip_selected_shake">#FFEDD5</color>
+    <color name="chip_selected_tap">#E0F2FE</color>
+    <color name="chip_selected_wave">#EDE9FE</color>
+    <color name="chip_stroke">#CBD5E1</color>
+    <color name="idle_tint">#475569</color>
+    <color name="listening_tint">#64748B</color>
+    <color name="primary">#0D9488</color>
+    <color name="primary_dark">#0F766E</color>
+    <color name="primary_variant">#115E59</color>
+    <color name="shake_tint">#C2410C</color>
+    <color name="status_dot">#22C55E</color>
+    <color name="status_dot_listening">#94A3B8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0FDFA</color>
+    <color name="tap_tint">#0369A1</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="wave_tint">#6D28D9</color>
+    <string name="app_name">Gesture Recognizer</string>
+    <string name="current_gesture">Current detected gesture</string>
+    <string name="hint">Recognized gestures</string>
+    <string name="idle">IDLE</string>
+    <string name="listening">Listening…</string>
+    <string name="model_version_bundled">Model: bundled</string>
+    <string name="model_version_ota">Model v%1$d (%2$s)</string>
+    <string name="model_version_v">Model v%1$d</string>
+    <string name="shake">SHAKE</string>
+    <string name="status_active">Sensing</string>
+    <string name="status_loading">Loading gesture model…</string>
+    <string name="subtitle">Move your phone — tap, wave, or shake</string>
+    <string name="tap">TAP</string>
+    <string name="wave">WAVE</string>
+    <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    <style name="Theme.GestureApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@color/primary_variant</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

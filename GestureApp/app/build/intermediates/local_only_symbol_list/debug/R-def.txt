@@ -1,0 +1,24 @@
+R_DEF: Internal format may change without notice
+local
+color accent
+color background
+color primary
+color primary_dark
+color surface
+color text_primary
+color text_secondary
+drawable ic_launcher_foreground
+id card
+id label
+id status
+id subtitle
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string listening
+string shake
+string subtitle
+string tap
+string wave
+style Theme.GestureApp

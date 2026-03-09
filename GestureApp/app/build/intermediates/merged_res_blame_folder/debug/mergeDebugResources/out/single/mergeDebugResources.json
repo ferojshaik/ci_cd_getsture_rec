@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-debug-31:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-main-33:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-debug-31:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-main-33:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-debug-31:\\drawable_status_dot.xml.flat",
+        "source": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-main-33:\\drawable\\status_dot.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-debug-31:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-main-33:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.gesture.app-debug-31:/layout_activity_main.xml.flat",
+        "source": "com.gesture.app-main-33:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-debug-31:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\shaik\\.gradle\\daemon\\8.7\\com.gesture.app-main-33:\\layout\\activity_main.xml"
+    }
+]
