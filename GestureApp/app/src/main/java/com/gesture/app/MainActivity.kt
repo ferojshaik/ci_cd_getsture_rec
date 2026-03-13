@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var modelVersionView: TextView? = null
     private var chipGroup: ChipGroup? = null
     private var statusDot: android.view.View? = null
+    private var scoreIdealView: TextView? = null
+    private var scoreTapView: TextView? = null
+    private var scoreShakeView: TextView? = null
+    private var scoreWaveView: TextView? = null
     private var currentModelVersion: Int = 0
 
     private val chipIds = intArrayOf(R.id.tap_chip, R.id.wave_chip, R.id.shake_chip, R.id.idle_chip)
@@ -59,6 +63,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             modelVersionView = findViewById(R.id.model_version)
             chipGroup = findViewById(R.id.chip_group)
             statusDot = findViewById(R.id.status_dot)
+            scoreIdealView = findViewById(R.id.score_ideal)
+            scoreTapView = findViewById(R.id.score_tap)
+            scoreShakeView = findViewById(R.id.score_shake)
+            scoreWaveView = findViewById(R.id.score_wave)
             labelView?.setTextColor(ContextCompat.getColor(this, R.color.listening_tint))
             labelView?.textSize = 36f
             statusView?.text = getString(R.string.status_loading)
@@ -155,7 +163,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 interpolate(bufferCopy, t)
             }
             val features = FeatureExtractor.extract(window)
-            val pred = cl.classify(features)
+            val scores = cl.classifyWithScores(features)
+            val pred = scores.indices.maxByOrNull { scores[it] } ?: 0
+            mainHandler.post { updateScoresDisplay(scores) }
             if (pred == lastPrediction[0]) {
                 stableCount[0]++
                 val required = if (pred == 2) 1 else 2
@@ -188,6 +198,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             a.y + frac * (b.y - a.y),
             a.z + frac * (b.z - a.z)
         )
+    }
+
+    /** Update the IDEAL | TAP | SHAKE | WAVE confidence row; each value aligned under its label. */
+    private fun updateScoresDisplay(scores: FloatArray) {
+        if (scores.size < 4) return
+        scoreIdealView?.text = scores[3].toInt().coerceIn(0, 100).toString()
+        scoreTapView?.text = scores[0].toInt().coerceIn(0, 100).toString()
+        scoreShakeView?.text = scores[2].toInt().coerceIn(0, 100).toString()
+        scoreWaveView?.text = scores[1].toInt().coerceIn(0, 100).toString()
     }
 
     private fun updateGestureUi(label: String, index: Int) {

@@ -4,6 +4,7 @@ import android.content.Context
 import org.tensorflow.lite.Interpreter
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import kotlin.math.exp
 import kotlin.math.round
 
 /**
@@ -44,11 +45,21 @@ class GestureClassifier(context: Context, modelBytes: ByteArray? = null) {
     }
 
     /**
-     * Run inference on 39 features. Returns label index 0, 1, or 2.
+     * Run inference on 39 features. Returns label index 0=TAP, 1=WAVE, 2=SHAKE, 3=IDLE.
      */
     fun classify(features: FloatArray): Int {
+        val scores = classifyWithScores(features)
+        return scores.indices.maxByOrNull { scores[it] } ?: 0
+    }
+
+    /**
+     * Run inference and return 4 class scores as percentages (0–100, sum ≈ 100).
+     * Order: [TAP, WAVE, SHAKE, IDLE] (indices 0,1,2,3).
+     */
+    fun classifyWithScores(features: FloatArray): FloatArray {
         require(features.size == FeatureExtractor.NUM_FEATURES)
-        return if (isQuantized) {
+        val logits = FloatArray(4)
+        if (isQuantized) {
             val inputBuffer = ByteBuffer.allocateDirect(39).order(ByteOrder.nativeOrder())
             for (i in 0 until 39) {
                 val q = round(features[i] / inputScale + inputZeroPoint).toInt().coerceIn(-128, 127)
@@ -58,24 +69,25 @@ class GestureClassifier(context: Context, modelBytes: ByteArray? = null) {
             val outputBuffer = ByteBuffer.allocateDirect(4).order(ByteOrder.nativeOrder())
             interpreter.run(inputBuffer, outputBuffer)
             outputBuffer.rewind()
-            var maxIdx = 0
-            var maxVal = Float.MIN_VALUE
             for (i in 0 until 4) {
                 val q = outputBuffer.get().toInt()
-                val dequant = (q - outputZeroPoint) * outputScale
-                if (dequant > maxVal) {
-                    maxVal = dequant
-                    maxIdx = i
-                }
+                logits[i] = (q - outputZeroPoint) * outputScale
             }
-            maxIdx
         } else {
             val inputBuffer = ByteBuffer.allocateDirect(39 * 4).order(ByteOrder.nativeOrder())
             for (f in features) inputBuffer.putFloat(f)
             inputBuffer.rewind()
-            val outputBuffer = FloatArray(4)
-            interpreter.run(inputBuffer, outputBuffer)
-            outputBuffer.indices.maxByOrNull { outputBuffer[it] } ?: 0
+            interpreter.run(inputBuffer, logits)
+        }
+        // Softmax and scale to 0–100 for display
+        val maxLogit = logits.maxOrNull() ?: 0f
+        var sum = 0.0
+        for (i in 0 until 4) {
+            val e = exp((logits[i] - maxLogit).toDouble())
+            sum += e
+        }
+        return FloatArray(4) { i ->
+            (100.0 * exp((logits[i] - maxLogit).toDouble()) / sum).toFloat()
         }
     }
 
