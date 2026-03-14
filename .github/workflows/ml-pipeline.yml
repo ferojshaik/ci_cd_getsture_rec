@@ -22,20 +22,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set project directory
+        id: project
+        run: |
+          if [ -d gesture-recognition ] && [ -f gesture-recognition/requirements.txt ]; then
+            echo "dir=gesture-recognition" >> $GITHUB_OUTPUT
+          elif [ -f requirements.txt ]; then
+            echo "dir=." >> $GITHUB_OUTPUT
+          else
+            echo "::error::No requirements.txt found"
+            ls -la
+            exit 1
+          fi
+          echo "Using project dir: ${{ steps.project.outputs.dir }}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: cd gesture-recognition && pip install -r requirements.txt
+        run: |
+          cd ${{ steps.project.outputs.dir }}
+          pip install -r requirements.txt
 
       - name: Run full pipeline
-        run: cd gesture-recognition && python run_pipeline.py
+        run: |
+          cd ${{ steps.project.outputs.dir }}
+          python run_pipeline.py
 
       - name: Upload run artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ml-run-${{ github.run_id }}
-          path: gesture-recognition/runs/
+          path: ${{ steps.project.outputs.dir }}/runs/
           retention-days: 30

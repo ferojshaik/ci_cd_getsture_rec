@@ -27,20 +27,45 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List workspace (debug)
+        run: |
+          echo "=== Repo root contents ==="
+          ls -la
+          echo "=== If gesture-recognition exists ==="
+          ls -la gesture-recognition 2>/dev/null || echo "gesture-recognition/ not found"
+
+      - name: Set project directory
+        id: project
+        run: |
+          if [ -d gesture-recognition ] && [ -f gesture-recognition/requirements.txt ]; then
+            echo "dir=gesture-recognition" >> $GITHUB_OUTPUT
+          elif [ -f requirements.txt ]; then
+            echo "dir=." >> $GITHUB_OUTPUT
+          else
+            echo "::error::No requirements.txt found at root or in gesture-recognition/"
+            ls -la
+            exit 1
+          fi
+          echo "Using project dir: ${{ steps.project.outputs.dir }}"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: cd gesture-recognition && pip install -r requirements.txt
+        run: |
+          cd ${{ steps.project.outputs.dir }}
+          pip install -r requirements.txt
 
       - name: Validate data
-        run: cd gesture-recognition && python validate_data.py
+        run: |
+          cd ${{ steps.project.outputs.dir }}
+          python validate_data.py
 
       - name: Config and imports check
         run: |
-          cd gesture-recognition
+          cd ${{ steps.project.outputs.dir }}
           python -c "from mlops_config import load_config; c = load_config(); assert 'random_seed' in c; print('config OK')"
           python -c "from trainer import build_model; build_model(); print('trainer OK')"
           python -c "from export_tflite import convert_to_tflite; print('export_tflite OK')"
