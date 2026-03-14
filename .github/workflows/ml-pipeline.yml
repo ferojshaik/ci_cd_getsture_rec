@@ -20,7 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: gesture-recognition
-        shell: bash
+        shell: /bin/bash
 
     steps:
       - name: Checkout
@@ -32,9 +32,11 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        shell: /bin/bash
         run: pip install -r requirements.txt
 
       - name: Run full pipeline
+        shell: /bin/bash
         run: python run_pipeline.py
 
       - name: Upload run artifacts

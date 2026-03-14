@@ -25,7 +25,7 @@ jobs:
     defaults:
       run:
         working-directory: gesture-recognition
-        shell: bash
+        shell: /bin/bash
 
     steps:
       - name: Checkout
@@ -37,12 +37,15 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        shell: /bin/bash
         run: pip install -r requirements.txt
 
       - name: Validate data
+        shell: /bin/bash
         run: python validate_data.py
 
       - name: Config and imports check
+        shell: /bin/bash
         run: |
           python -c "
           from mlops_config import load_config
