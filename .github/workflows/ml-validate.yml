@@ -22,10 +22,6 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: gesture-recognition
-        shell: /bin/bash
 
     steps:
       - name: Checkout
@@ -37,21 +33,14 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        shell: /bin/bash
-        run: pip install -r requirements.txt
+        run: cd gesture-recognition && pip install -r requirements.txt
 
       - name: Validate data
-        shell: /bin/bash
-        run: python validate_data.py
+        run: cd gesture-recognition && python validate_data.py
 
       - name: Config and imports check
-        shell: /bin/bash
         run: |
-          python -c "
-          from mlops_config import load_config
-          c = load_config()
-          assert 'random_seed' in c
-          print('config OK')
-          "
+          cd gesture-recognition
+          python -c "from mlops_config import load_config; c = load_config(); assert 'random_seed' in c; print('config OK')"
           python -c "from trainer import build_model; build_model(); print('trainer OK')"
           python -c "from export_tflite import convert_to_tflite; print('export_tflite OK')"
