@@ -12,10 +12,12 @@ on:
     branches: [main, master]
     paths:
       - 'gesture-recognition/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [main, master]
     paths:
       - 'gesture-recognition/**'
+      - '.github/workflows/**'
 
 jobs:
   validate:
