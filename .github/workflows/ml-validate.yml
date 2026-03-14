@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# CI: Run data validation and config sanity on every push/PR
+# ---------------------------------------------------------------------------
+# Why: Catch broken data or config before anyone runs the full pipeline.
+# Fast (~1 min): no training, just validate_data.py + import checks.
+# ---------------------------------------------------------------------------
+
+name: ML Validate
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'gesture-recognition/**'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'gesture-recognition/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gesture-recognition
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate data
+        run: python validate_data.py
+
+      - name: Config and imports check
+        run: |
+          python -c "
+          from mlops_config import load_config
+          c = load_config()
+          assert 'random_seed' in c
+          print('config OK')
+          "
+          python -c "from trainer import build_model; build_model(); print('trainer OK')"
+          python -c "from export_tflite import convert_to_tflite; print('export_tflite OK')"

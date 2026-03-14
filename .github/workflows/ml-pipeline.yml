@@ -1,0 +1,44 @@
+# ---------------------------------------------------------------------------
+# CD: Full ML pipeline (validate → train → export → register)
+# ---------------------------------------------------------------------------
+# Why: Train and export in CI so you get a reproducible artifact without
+# running the pipeline on your machine. Trigger manually or on a schedule.
+# ---------------------------------------------------------------------------
+
+name: ML Pipeline (Train & Export)
+
+on:
+  workflow_dispatch:   # Manual: Actions tab → "Run workflow"
+  schedule:
+    # Optional: run weekly (e.g. retrain on new data). Comment out if not needed.
+    - cron: '0 2 * * 0'   # 02:00 UTC every Sunday
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: gesture-recognition
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run full pipeline
+        run: python run_pipeline.py
+
+      - name: Upload run artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-run-${{ github.run_id }}
+          path: gesture-recognition/runs/
+          retention-days: 30
