@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# MLOps Lesson 1: Training config in one place
+# ---------------------------------------------------------------------------
+# Why: So we can reproduce any run. Change values here and re-run trainer.py;
+# no need to edit code. In a team, everyone reads "what was used" from this file.
+# ---------------------------------------------------------------------------
+
+# Random seed for numpy and TensorFlow. Same seed + same data + same code = same model.
+random_seed: 42
+
+# Model architecture (must match dataset: 39 features, 4 classes)
+input_dim: 39
+num_classes: 4
+l2: 0.0001
+dropout: 0.2
+
+# Training
+epochs: 250
+learning_rate: 0.001
+train_val_split: 0.15   # 15% for validation (stratified)
+
+# Callbacks
+early_stopping_patience: 35
+reduce_lr_patience: 12
+reduce_lr_factor: 0.5
+min_lr: 0.000001
+
+# Paths (relative to project root)
+saved_model_dir: "saved_model"
+training_folder: "Training"
+testing_folder: "Testing"

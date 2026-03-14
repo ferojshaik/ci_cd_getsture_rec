@@ -1,0 +1,10 @@
+# ---------------------------------------------------------------------------
+# MLOps Lesson 1: Pinned versions for reproducibility
+# ---------------------------------------------------------------------------
+# Install: pip install -r requirements.txt
+# Why pin: So "pip install -r requirements.txt" gives the same env everywhere.
+# ---------------------------------------------------------------------------
+numpy==1.24.3
+tensorflow>=2.10.0,<2.16.0
+scikit-learn>=1.2.0,<1.5.0
+PyYAML>=6.0

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary: deep teal -->
+    <color name="primary">#0D9488</color>
+    <color name="primary_dark">#0F766E</color>
+    <color name="primary_variant">#115E59</color>
+    <color name="accent">#2DD4BF</color>
+    <!-- Surfaces -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0FDFA</color>
+    <color name="background">#F8FAFC</color>
+    <color name="card_surface">#FFFFFF</color>
+    <!-- Text -->
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <!-- Gesture feedback -->
+    <color name="listening_tint">#64748B</color>
+    <color name="tap_tint">#0369A1</color>
+    <color name="wave_tint">#6D28D9</color>
+    <color name="shake_tint">#C2410C</color>
+    <color name="idle_tint">#475569</color>
+    <!-- Chips & status -->
+    <color name="chip_background">#F1F5F9</color>
+    <color name="chip_stroke">#CBD5E1</color>
+    <color name="chip_selected_tap">#E0F2FE</color>
+    <color name="chip_selected_wave">#EDE9FE</color>
+    <color name="chip_selected_shake">#FFEDD5</color>
+    <color name="chip_selected_idle">#F1F5F9</color>
+    <color name="status_dot">#22C55E</color>
+    <color name="status_dot_listening">#94A3B8</color>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gesture Recognizer</string>
+    <string name="listening">Listening…</string>
+    <string name="tap">TAP</string>
+    <string name="wave">WAVE</string>
+    <string name="shake">SHAKE</string>
+    <string name="idle">IDLE</string>
+    <string name="subtitle">Move your phone — tap, wave, or shake</string>
+    <string name="hint">Recognized gestures</string>
+    <string name="status_active">Sensing</string>
+    <string name="status_loading">Loading gesture model…</string>
+    <string name="current_gesture">Current detected gesture</string>
+    <string name="model_version_bundled">Model: bundled</string>
+    <string name="model_version_v">Model v%1$d</string>
+    <string name="model_version_ota">Model v%1$d (%2$s)</string>
+</resources>
