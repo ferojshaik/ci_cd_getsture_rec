@@ -25,6 +25,7 @@ jobs:
     defaults:
       run:
         working-directory: gesture-recognition
+        shell: bash
 
     steps:
       - name: Checkout
