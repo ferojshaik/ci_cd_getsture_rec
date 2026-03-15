@@ -28,9 +28,6 @@ jobs:
           echo "=== If gesture-recognition exists ==="
           ls -la gesture-recognition 2>/dev/null || echo "gesture-recognition/ not found"
 
-      - name: "[TEST] Intentional fail for self-heal agent"
-        run: exit 1
-
       - name: Set project directory
         id: project
         run: |
